@@ -21,9 +21,12 @@ public class CommonSeleniumActions extends DriverConfiguration {
     */
     public CommonSeleniumActions() {
 	logger = new Log(getClass().getSimpleName());
+	if (driver == null) {
+	    initDriver();
+	}
     }
 
-    public WebDriver openBrowser(String Url, WebDriver driver) throws Exception {
+    public WebDriver openBrowser(String Url) throws Exception {
 	try {
 	    // this.deleteAllCookies();
 	    logger.info("Current ViewPort is: " + driver.manage().window().getSize().toString());

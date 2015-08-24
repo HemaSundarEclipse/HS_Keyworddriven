@@ -12,8 +12,10 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.HS.common.ExecutionEnvironment;
+import com.HS.common.StepDetails;
 import com.HS.common.TestCaseLocation;
 import com.HS.common.TestObject;
+import com.HS.common.TestStepExecution;
 import com.HS.dataReader.CSVDataReader;
 import com.HS.utils.Log;
 
@@ -64,6 +66,8 @@ public class TestEngine {
 
 	gettingTestCases4Execution(testGroup, testCaseID);
 	for (TestCaseLocation currentTestCaseID : TestCaseIDsForExecution) {
+	    // Need to write logic to check whether the TC found in TC sheet or
+	    // not
 	    executeTestCase(currentTestCaseID.getTCName(), currentTestCaseID.getTCRowNumber());
 	}
     }
@@ -73,11 +77,21 @@ public class TestEngine {
      * @param tcRowNumber
      */
     private void executeTestCase(String tcName, int tcRowNumber) {
-	// TODO Auto-generated method stub
+	String step, parent, testObject, dataContent, StepAction;
+	do {
+	    StepDetails tcStepData4TestStep = getTCStepData4TestStep(tcRowNumber);
+	    TestObject currentStepTestObject = getORData4TestStep(tcStepData4TestStep.getParent(),
+		    tcStepData4TestStep.getTestObject());
+	    TestStepExecution stepExecutor = new TestStepExecution(tcStepData4TestStep, currentStepTestObject);
+
+	    stepExecutor.executeTestStep();
+	    tcRowNumber++;
+	} while (reader.getCellValue(tcData, tcRowNumber, "testcase_id") == null
+		|| reader.getCellValue(tcData, tcRowNumber, "testcase_id").trim() == "");
 
     }
 
-    public TestObject getORData4TestStep(String parent, String testObject) throws Exception {
+    public TestObject getORData4TestStep(String parent, String testObject) {
 	String how = null, what = null;
 	try {
 	    int rowCount = orData.size();
@@ -92,11 +106,25 @@ public class TestEngine {
 		}
 		iterativeRow++;
 	    }
-	    return new TestObject(how, what);
-
 	} catch (Exception e) {
-	    throw e;
+	    // throw e;
 	}
+	return new TestObject(how, what);
+    }
+
+    /**
+     * @param tcRowNumber
+     * @return
+     * 
+     */
+    private StepDetails getTCStepData4TestStep(int tcRowNumber) {
+	String step = reader.getCellValue(tcData, tcRowNumber, "step");
+	String parent = reader.getCellValue(tcData, tcRowNumber, "parent");
+	String testObject = reader.getCellValue(tcData, tcRowNumber, "testObject");
+	String dataContent = reader.getCellValue(tcData, tcRowNumber, "dataContent");
+	String StepAction = reader.getCellValue(tcData, tcRowNumber, "stepaction");
+	return new StepDetails(step, parent, testObject, dataContent, StepAction);
+
     }
 
     /**
