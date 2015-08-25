@@ -15,11 +15,14 @@ import com.HS.utils.Log;
  */
 public class CommonSeleniumActions extends DriverConfiguration {
     public Log logger;
+    public ExecutionEnvironment env;
 
     /**
     * 
     */
-    public CommonSeleniumActions() {
+    public CommonSeleniumActions(ExecutionEnvironment env) {
+	super(env);
+	this.env = env;
 	logger = new Log(getClass().getSimpleName());
 	if (driver == null) {
 	    initDriver();

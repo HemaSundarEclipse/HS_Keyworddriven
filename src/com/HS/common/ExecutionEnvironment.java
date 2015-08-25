@@ -28,10 +28,7 @@ public class ExecutionEnvironment {
     public String testCaseFileFormat;
     // Name and location of Property file location (uiautomation.properties)
     public String propertyFileLocation;
-    // Name and location of Object Repository.
-    public String objectRepositoryFileLocation;
-    // Location of test cases.
-    public String testCaseFileLocation;
+
     public String logFile;
     public String buildEnv;
 
@@ -70,11 +67,11 @@ public class ExecutionEnvironment {
      */
     public void assigningEnv() {
 	browserName = execEnvVarMap.get("browserName");
-	isRemoteExecution = execEnvVarMap.get("browserName");
-	remoteURL = execEnvVarMap.get("RemoteUrl");
-	maxTimeOut = Integer.parseInt(execEnvVarMap.get("MaximumTimeout"));
+	isRemoteExecution = execEnvVarMap.get("IsRemoteExecution");
+	remoteURL = execEnvVarMap.get("remoteUrl");
+	maxTimeOut = Integer.parseInt(execEnvVarMap.get("maximumTimeout"));
 	fileSeperator = execEnvVarMap.get("file.separator");
-	testCaseFileFormat = execEnvVarMap.get("TestCaseFileFormat");
+	testCaseFileFormat = execEnvVarMap.get("testCaseFileFormat");
 	buildEnv = execEnvVarMap.get("buildEnv");
     }
 
@@ -85,15 +82,6 @@ public class ExecutionEnvironment {
 	propertyFileLocation = "src" + fileSeperator + "com" + fileSeperator + "HS" + fileSeperator + "common"
 		+ fileSeperator + "ExecEnv.properties";
 
-	// Name and location of Object Repository.
-	objectRepositoryFileLocation = "src" + fileSeperator + "com" + fileSeperator + "HS" + fileSeperator
-		+ "executionData" + fileSeperator + "ObjectRepository";
-	/*
-	 * Location of test cases. Will be used in setFileLocation() method of
-	 * ReaderUtility.java
-	 */
-	testCaseFileLocation = "src" + fileSeperator + "main" + fileSeperator + "resources" + fileSeperator + "TestCase"
-		+ fileSeperator;
 	logFile = "Logs";
 
     }

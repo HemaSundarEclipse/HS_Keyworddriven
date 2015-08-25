@@ -20,11 +20,12 @@ public class TestStepExecution {
      * @param tcStepData4TestStep
      * 
      */
-    public TestStepExecution(StepDetails tcStepData4TestStep, TestObject currentStepTestObject) {
+    public TestStepExecution(StepDetails tcStepData4TestStep, TestObject currentStepTestObject,
+	    ExecutionEnvironment env) {
 	this.currentStepTestObject = currentStepTestObject;
 	this.tcStepData4TestStep = tcStepData4TestStep;
 	logger = new Log(getClass().getSimpleName());
-	perform = new CommonSeleniumActions();
+	perform = new CommonSeleniumActions(env);
     }
 
     /**

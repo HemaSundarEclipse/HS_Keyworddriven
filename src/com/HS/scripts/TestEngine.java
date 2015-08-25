@@ -46,6 +46,7 @@ public class TestEngine {
 	 * Loading And assigning execution environment into java variables
 	 */
 	env.assigningFilePaths();
+	reader.setFilePaths();
 	env.loadEnv4mPropFile();
 	env.updateEnv4mSystemProp();
 	env.assigningEnv();
@@ -78,14 +79,19 @@ public class TestEngine {
      */
     private void executeTestCase(String tcName, int tcRowNumber) {
 	String step, parent, testObject, dataContent, StepAction;
+	int tcRowCount = tcData.size();
 	do {
 	    StepDetails tcStepData4TestStep = getTCStepData4TestStep(tcRowNumber);
 	    TestObject currentStepTestObject = getORData4TestStep(tcStepData4TestStep.getParent(),
 		    tcStepData4TestStep.getTestObject());
-	    TestStepExecution stepExecutor = new TestStepExecution(tcStepData4TestStep, currentStepTestObject);
+	    TestStepExecution stepExecutor = new TestStepExecution(tcStepData4TestStep, currentStepTestObject, env);
 
 	    stepExecutor.executeTestStep();
 	    tcRowNumber++;
+
+	    if (tcRowNumber > tcRowCount) {
+		break;
+	    }
 	} while (reader.getCellValue(tcData, tcRowNumber, "testcase_id") == null
 		|| reader.getCellValue(tcData, tcRowNumber, "testcase_id").trim() == "");
 
@@ -142,7 +148,7 @@ public class TestEngine {
 		    if (reader.getCellValue(tcData, tcIndex, "testcase_id").equalsIgnoreCase(ID)) {
 			TestCaseIDsForExecution.add(new TestCaseLocation(ID, tcIndex));
 		    }
-
+		    tcIndex++;
 		}
 
 	    }

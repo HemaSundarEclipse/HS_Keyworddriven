@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.HS.common.ExecutionEnvironment;
 import com.HS.utils.Log;
 
 /**
@@ -19,11 +18,25 @@ import com.HS.utils.Log;
  */
 public class CSVDataReader {
     public Log logger;
-    public ExecutionEnvironment env;
+    public String objectRepositoryFileLocation;
+    public String testCaseFileLocation;
 
     public CSVDataReader() {
 	logger = new Log(getClass().getSimpleName());
-	env = new ExecutionEnvironment();
+    }
+
+    /**
+     * 
+     */
+    public void setFilePaths() {
+	// Name and location of Object Repository.
+	objectRepositoryFileLocation = "src/com/HS/executionData/ObjectRepository";
+	/*
+	 * Location of test cases. Will be used in setFileLocation() method of
+	 * ReaderUtility.java
+	 */
+	testCaseFileLocation = "src/com/HS/executionData/TestCases";
+
     }
 
     /**
@@ -66,7 +79,7 @@ public class CSVDataReader {
     public List<String[]> getORData() {
 	List<String[]> objTb = null;
 	try {
-	    objTb = getRequiredRows(env.objectRepositoryFileLocation);
+	    objTb = getRequiredRows(objectRepositoryFileLocation + ".csv");
 
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -83,7 +96,7 @@ public class CSVDataReader {
     public List<String[]> getTestCaseData() {
 	List<String[]> rs = null;
 	try {
-	    rs = getRequiredRows(env.testCaseFileLocation);
+	    rs = getRequiredRows(testCaseFileLocation + ".csv");
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}

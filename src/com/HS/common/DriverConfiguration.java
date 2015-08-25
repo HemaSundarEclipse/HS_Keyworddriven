@@ -34,10 +34,10 @@ public class DriverConfiguration {
     /**
      * 
      */
-    public DriverConfiguration() {
+    public DriverConfiguration(ExecutionEnvironment env) {
+	this.env = env;
 	logger = new Log(getClass().getSimpleName());
 	testData = new ParseInputData();
-	env = new ExecutionEnvironment();
     }
 
     public WebDriver initDriver() {
