@@ -18,4 +18,13 @@ public class HTMLReporter implements Reporter {
     public HTMLReporter() {
 	logger = new Log(getClass().getSimpleName());
     }
+
+    /**
+     * 
+     */
+    public void setFilePaths() {
+	// TODO Auto-generated method stub
+
+    }
+
 }
