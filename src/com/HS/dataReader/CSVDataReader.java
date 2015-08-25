@@ -116,8 +116,15 @@ public class CSVDataReader {
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
+	    logger.error(e.getLocalizedMessage());
 	}
-	String[] specificRow = sheet.get(row);
+	String[] specificRow = null;
+	try {
+	    specificRow = sheet.get(row);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    logger.error(e.getLocalizedMessage());
+	}
 	return specificRow[colNum];
 
     }

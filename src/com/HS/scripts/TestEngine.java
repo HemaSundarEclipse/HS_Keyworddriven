@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -89,7 +90,7 @@ public class TestEngine {
 	    stepExecutor.executeTestStep();
 	    tcRowNumber++;
 
-	    if (tcRowNumber > tcRowCount) {
+	    if (tcRowNumber == tcRowCount) {
 		break;
 	    }
 	} while (reader.getCellValue(tcData, tcRowNumber, "testcase_id") == null
@@ -177,5 +178,13 @@ public class TestEngine {
 		}
 	    }
 	}
+    }
+
+    /**
+     * 
+     */
+    @AfterTest
+    private void AfterTestMethod() {
+	logger.info("In AfterTest method");
     }
 }
